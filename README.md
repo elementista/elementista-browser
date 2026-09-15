@@ -1,4 +1,3 @@
-
 # Elementista Browser 🛡️✨🚀
 
 > **Meu primeiro projeto oficial no desenvolvimento de software!** 🎉
@@ -19,7 +18,8 @@ Um navegador portátil e otimizado desenvolvido com **Electron** e **Flash Playe
 ## 💻 Como Rodar o Projeto Localmente
 
 Certifique-se de ter o **Node.js** instalado na sua máquina. Abra o terminal e siga os passos:
-bash
+
+```bash
 # Clone o repositório
 git clone https://github.com/elementista/elementista-browser.git
 
@@ -31,20 +31,22 @@ npm install
 
 # Inicie o navegador em modo de desenvolvimento
 npm start
-
----
+```
 
 ## 📦 Como Gerar os Pacotes Portáteis
 
 Para compilar os arquivos executáveis e distribuíveis:
 
-* **Para Linux (AppImage):**
-bash
+### Para Linux (AppImage):
+```bash
 npm run dist
+```
 
-* **Para Windows (Executável Portable):**
-bash
+### Para Windows (Executável Portable):
+```bash
 npm run dist:win
+```
+
 ---
 
 ## 🛠️ Tecnologias Utilizadas
@@ -57,6 +59,6 @@ npm run dist:win
 
 ## 💡 Sobre o Projeto
 
-Este projeto marcou o meu aprendizado prático com engenharia de software voltada para desktop, lidando com empacotamento, compatibilidade multiplataforma (Linux Mint, Arch Linux e Windows) e integração nativa de binários legados. 
+Este projeto marcou o meu aprendizado prático com engenharia de software voltada para desktop, lidando com empacotamento, compatibilidade multiplataforma (Linux Mint, Arch Linux e Windows) e integração nativa de binários legados.
 
 Sinta-se à vontade para explorar o código, abrir issues ou sugerir melhorias!
