@@ -1,0 +1,55 @@
+{
+  "name": "elementista-browser",
+  "version": "1.0.0",
+  "description": "Navegador para jogos que usam flash player por pacjay / elementista",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --linux AppImage",
+    "dist:win": "electron-builder --win portable"
+  },
+  "keywords": [],
+  "author": "pacjay / elementista",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "9.4.4",
+    "electron-builder": "^24.13.3"
+  },
+  "dependencies": {
+    "electron-dl": "*",
+    "electron-navigation": "*"
+  },
+   "build": {
+    "appId": "com.elementista.browser",
+    "productName": "ElementistaBrowser",
+    "directories": {
+      "buildResources": "build"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Game",
+      "icon": "build/icon.png"
+    },
+    "win": {
+      "target": [
+        "portable"
+      ]
+    },
+    "files": [
+      "index.js",
+      "browser.html",
+      "launcher.js",
+      "style.css",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "flashver",
+        "to": "flashver"
+      }
+    ]
+  }
+
+}

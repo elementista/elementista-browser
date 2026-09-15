@@ -1,0 +1,68 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #1a1a1a;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Barra de abas superior */
+#nav-body-tabs {
+  background-color: #2b2b2b;
+  padding: 5px 5px 0 5px;
+  flex-shrink: 0;
+}
+
+/* TRAZ A BARRA DE VOLTA: Estiliza a barra de endereços de forma discreta e elegante */
+#nav-body-ctrls {
+  background-color: #232323 !important;
+  padding: 6px 10px !important;
+  display: flex !important; /* Ativa a exibição da barra */
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #333;
+}
+
+/* Deixa o campo de texto escuro e moderno para digitar os links */
+#nav-ctrls-url {
+  background-color: #121212 !important;
+  color: #fff !important;
+  border: 1px solid #444 !important;
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
+  font-size: 13px !important;
+  flex-grow: 1;
+}
+
+/* Estiliza os botões clássicos de Voltar, Avançar e Atualizar da barra */
+#nav-ctrls-back, #nav-ctrls-forward, #nav-ctrls-reload {
+  background-color: #333 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 4px 10px !important;
+  cursor: pointer;
+}
+
+#nav-ctrls-back:hover, #nav-ctrls-forward:hover, #nav-ctrls-reload:hover {
+  background-color: #444 !important;
+}
+
+/* Contêiner do jogo: ocupa o espaço restante */
+#nav-body-views {
+  flex-grow: 1;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Força a tela do jogo a esticar completamente */
+.nav-views-view, webview {
+  width: 100% !important;
+  height: 100% !important;
+  border: none;
+}
