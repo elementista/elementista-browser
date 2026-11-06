@@ -1,0 +1,68 @@
+{
+  "name": "elementista-browser-pure",
+  "version": "3.11.5",
+  "description": "Navegador Nativo Flash Player por pacjay / elementista",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "teste:linux": "electron-builder --linux dir",
+    "teste:win": "electron-builder --win dir",
+    "dist": "electron-builder --linux AppImage",
+    "dist:win": "electron-builder --win portable"
+  },
+  "keywords": [],
+  "author": "pacjay / elementista",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "11.5.0",
+    "electron-builder": "^24.13.3"
+  },
+  "dependencies": {
+    "electron-navigation": "*"
+  },
+  "build": {
+    "appId": "com.elementista.browser.pure",
+    "productName": "ElementistaBrowser",
+    "directories": {
+      "buildResources": "build"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Game",
+      "icon": "build/icons"
+    },
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "icon": "build/icon.ico"
+    },
+    "files": [
+      "index.js",
+      "browser.html",
+      "inicio.html",
+      "inicio.js",
+      "launcher.js",
+      "style.css",
+      "package.json",
+      "logo-escudo.png",
+      "build/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "flashver",
+        "to": "flashver"
+      }
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "**/flashver/*"
+    ]
+  },
+  "allowScripts": {
+    "electron@11.5.0": true
+  }
+}
+

@@ -1,0 +1,204 @@
+/* ################################################################################################################################################
+// ################# BLOCO 1: RESET CORE E REGRAS DE ESTRUTURAÇÃO DO CORPO PRINCIPAL
+// [VALIDADO - PROIBIDO ALTERAR] Define o layout mestre em Flexbox vertical, remove margens e define o fundo preto absoluto
+// ################################################################################################################################################ */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    font-family: 'Courier New', Courier, monospace;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ################################################################################################################################################
+// ################# BLOCO 2: BARRA DE ELEMENTOS E CONTROLES SUPERIORES (BARRA DE FERRAMENTAS)
+// [VALIDADO - PROIBIDO ALTERAR] Controla o visual do terminal Matrix, inputs de endereço verde neon e os botões laranja retrô
+// ################################################################################################################################################ */
+
+/* Barra de Abas superior - Totalmente escura com tema Matrix */
+#nav-body-tabs {
+    background-color: #0d0d0d;
+    padding: 6px 6px 0 6px;
+    flex-shrink: 0;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+/* Barra de Controles (Voltar, Avançar, Atualizar e URL) */
+#nav-body-ctrls {
+    background-color: #111111 !important;
+    padding: 6px 10px !important;
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #ff9800 !important; /* Linha laranja clássica do seu terminal */
+    box-shadow: 0 2px 10px rgba(255, 152, 0, 0.1);
+}
+
+/* Campo de Endereço URL integrado ao estilo do terminal */
+#nav-ctrls-url {
+    background-color: #000000 !important;
+    color: #00ff66 !important; /* Texto verde neon Matrix */
+    border: 1px solid #ff9800 !important; /* Borda laranja */
+    border-radius: 4px !important;
+    padding: 5px 10px !important;
+    font-size: 13px !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    font-weight: bold !important;
+    flex-grow: 1;
+}
+
+/* Botões do Navegador (Voltar, Avançar, Recarregar) estilo Botões de Console */
+#nav-ctrls-back, #nav-ctrls-forward, #nav-ctrls-reload {
+    background-color: #1a1a1a !important;
+    color: #ff9800 !important; /* Ícones/Letras em laranja terminal */
+    border: 1px solid #ff9800 !important;
+    border-radius: 4px !important;
+    padding: 4px 12px !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    font-weight: bold !important;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+/* Efeito Hover nos botões - Inverte a cor com brilho laranja ao passar o mouse */
+#nav-ctrls-back:hover, #nav-ctrls-forward:hover, #nav-ctrls-reload:hover {
+    background-color: #ff9800 !important;
+    color: #000000 !important;
+    box-shadow: 0 0 10px rgba(255, 152, 0, 0.4);
+}
+
+/* ################################################################################################################################################
+// ################# BLOCO 3: INTEGRAÇÃO GRÁFICA DO PACOTE DE ABAS (CORREÇÃO DE CONTRASTE E INTERAÇÃO HOVER)
+// [VALIDADO - PROIBIDO ALTERAR] Injeta as regras de força bruta para garantir contraste no texto e comportamento correto do botão de mais (+)
+// ################################################################################################################################################ */
+
+/* Corpo físico da aba individual gerada pelo pacote */
+.nav-tabs-tab {
+    background-color: #141414 !important;
+    border: 1px solid #262626 !important;
+    border-bottom: none !important;
+    color: #e0e0e0 !important;
+    transition: all 0.1s ease;
+}
+
+/* FIM DA CEGUEIRA: Estado da aba ativa/selecionada com o fundo laranja vibrante e bordas firmes */
+.nav-tabs-tab.active {
+    background-color: #ff9800 !important; /* Inverte para fundo laranja completo */
+    border: 1px solid #ff9800 !important;
+    border-bottom: none !important;
+}
+
+/* FIM DA CEGUEIRA: Força as letras a ficarem pretas e grossas apenas dentro da aba ativa */
+.nav-tabs-tab.active .nav-tabs-title {
+    color: #000000 !important; /* Letras pretas para contraste total */
+    font-weight: 900 !important; /* Máxima espessura da fonte Courier */
+}
+
+/* EFEITO HOVER DAS ABAS: Inverte as cores ao passar o mouse pelas abas inativas */
+.nav-tabs-tab:hover {
+    background-color: #ff9800 !important;
+    border-color: #ff9800 !important;
+    cursor: pointer;
+}
+
+.nav-tabs-tab:hover .nav-tabs-title {
+    color: #000000 !important;
+    font-weight: bold !important;
+}
+
+.nav-tabs-tab:hover .nav-tabs-close {
+    color: #000000 !important;
+}
+
+/* Texto padrão das abas em segundo plano (não selecionadas) */
+.nav-tabs-title {
+    color: #ffffff !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    font-weight: bold !important;
+    font-size: 12px !important;
+}
+
+/* Elemento interativo de fechar (X) fixado em cada aba */
+.nav-tabs-close {
+    color: #ff9800 !important;
+    font-weight: bold !important;
+}
+
+/* Garante que na aba ativa o botão de fechar (X) também fique preto para não sumir no laranja */
+.nav-tabs-tab.active .nav-tabs-close {
+    color: #000000 !important;
+}
+
+/* ==================================================================================== */
+/* BLINDAGEM DO BOTÃO ADICIONAR (REMOVE A CAMUFLAGEM DO SINAL DE +) */
+/* ==================================================================================== */
+
+/* Força o botão a iniciar visível e com o seu Verde Matrix constante */
+.nav-tabs-add,
+div.nav-tabs-add,
+.nav-tabs-add * {
+    color: #00ff66 !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    font-weight: bold !important;
+    font-size: 18px !important;
+    text-shadow: 0 0 5px rgba(0, 255, 102, 0.3) !important;
+}
+
+/* Base física do botão presa na barra superior */
+.nav-tabs-add {
+    padding: 0 12px !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.1s ease !important;
+}
+
+/* INTERCEPTADOR CORE: Quebra o script interno e força o mais (+) a inverter para laranja no hover */
+div[class*="nav-tabs-add"]:hover,
+div[class*="nav-tabs-add"]:hover * {
+    color: #ffffff !important; /* Letra brilha em branco */
+    background-color: #ff9800 !important; /* Caixa ganha fundo laranja clássico */
+    text-shadow: 0 0 10px #ffffff !important;
+}
+
+/* ################################################################################################################################################
+// ################# BLOCO 4: CONTÊINERES DE EXECUÇÃO DE PÁGINAS E ELEMENTOS DO FLASH VAULT
+// [VALIDADO - PROIBIDO ALTERAR] Mantém a estrutura de "jaula" em 100% e o seu layout de player com borda ciano intacto
+// ################################################################################################################################################ */
+
+/* Área de exibição das páginas/jogos */
+#nav-body-views {
+    flex-grow: 1;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+}
+
+/* Classes dinâmicas e tags internas que envelopam a renderização das páginas */
+.nav-views-view, webview {
+    width: 100% !important;
+    height: 100% !important;
+    border: none;
+    background-color: #000000;
+}
+
+/* Estrutura mestre do seu player centralizado com brilho e borda em ciano */
+#player-container {
+    width: 99%;
+    height: 100%;
+    border: 2px solid #00ffcc;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.1);
+    transition: transform 0.2s ease;
+}
+

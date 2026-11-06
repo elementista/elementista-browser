@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Elementista Browser versão 3.11.5</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Estrutura principal gerenciada pelo electron-navigation -->
+  <div id="nav-body-tabs"></div>
+  <div id="nav-body-ctrls"></div>
+  
+  <!-- [VALIDADO - SOLUÇÃO DOS SWF INTERNA] -->
+  <!-- Envelopamento mestre que impede o achatamento vertical e força os 100% reais dos jogos -->
+  <div id="player-container">
+      <div id="nav-body-views"></div>
+  </div>
+
+  <!-- Script principal que vai gerenciar toda a lógica com alta performance -->
+  <script src="launcher.js"></script>
+  
+</body>
+</html>
+

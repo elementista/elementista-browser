@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Início - Elementista Terminal Core</title>
+  <style>
+    /* Reset total e fundo dinâmico Matrix em segundo plano */
+    * { box-sizing: border-box; }
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      background-color: #000000;
+      font-family: 'Courier New', Courier, monospace;
+      color: #00ff66;
+    }
+
+    #matrix-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0.12; /* Chuva digital sutil atrás do terminal */
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 30px 15px;
+    }
+
+    /* Estrutura da Janela do Terminal Linux */
+    .terminal-window {
+      width: 100%;
+      max-width: 800px;
+      background-color: rgba(21, 5, 25, 0.95); /* Tom roxo escuro/preto clássico do Ubuntu */
+      border: 1px solid #ff9800;
+      border-radius: 6px;
+      box-shadow: 0 10px 40px rgba(255, 152, 0, 0.3);
+      overflow: hidden;
+    }
+
+    /* Barra Superior do Terminal com os Botões de Janela */
+    .terminal-header {
+      background-color: #3d3a3a;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .terminal-buttons {
+      display: flex;
+      gap: 7px;
+    }
+
+    .term-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .btn-close { background-color: #ff5f56; }
+    .btn-minimize { background-color: #ffbd2e; }
+    .btn-maximize { background-color: #27c93f; }
+
+    .terminal-title {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      color: #dfdbd2;
+      font-size: 13px;
+      font-weight: bold;
+      left: 0;
+      pointer-events: none;
+    }
+
+    /* Corpo Interno do Terminal */
+    .terminal-body {
+      padding: 25px;
+      max-height: 80vh;
+      overflow-y: auto;
+      text-align: left;
+    }
+
+    /* Customização da Scrollbar interna */
+    .terminal-body::-webkit-scrollbar { width: 8px; }
+    .terminal-body::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+    .terminal-body::-webkit-scrollbar-thumb { background: #ff9800; border-radius: 4px; }
+
+    .prompt {
+      color: #ff9800;
+      font-weight: bold;
+    }
+    .prompt-path { color: #4da6ff; }
+
+    /* Bloco de Log de Atenção */
+    .log-alert {
+      border: 1px dashed #ff9800;
+      background-color: rgba(58, 35, 0, 0.4);
+      padding: 15px;
+      margin: 15px 0 25px 0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #dfdbd2;
+    }
+
+    .log-alert strong { color: #ff9800; }
+
+    /* Estilização dos Links no Formato de Scripts Executáveis Linux */
+    .link-interno {
+      display: block;
+      background-color: rgba(0, 255, 102, 0.05);
+      color: #00ff66;
+      border: 1px solid #00ff66;
+      border-radius: 4px;
+      padding: 12px 15px;
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 12px;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      transition: all 0.1s ease;
+    }
+
+    .link-interno:hover {
+      background-color: #ff9800;
+      color: #000000;
+      border-color: #ff9800;
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(255, 152, 0, 0.5);
+      transform: translateX(4px);
+    }
+
+    /* Inputs de Cópia das Redes */
+    .redes-terminal-block {
+      margin-top: 30px;
+      border-top: 1px solid #3a1540;
+      padding-top: 20px;
+    }
+
+    .campo-link {
+      background-color: #0d0d0d;
+      border: 1px solid #ff9800;
+      color: #ff9800;
+      font-family: monospace;
+      padding: 6px 10px;
+      border-radius: 4px;
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 4px;
+      margin-bottom: 15px;
+      font-size: 12px;
+    }
+
+    .campo-link:focus { outline: none; box-shadow: 0 0 8px rgba(255, 152, 0, 0.5); }
+  </style>
+</head>
+<body>
+
+  <canvas id="matrix-bg"></canvas>
+
+  <div class="wrapper">
+    <div class="terminal-window">
+      
+      <!-- Barra Superior Linux -->
+      <div class="terminal-header">
+        <div class="terminal-buttons">
+          <span class="term-btn btn-close"></span>
+          <span class="term-btn btn-minimize"></span>
+          <span class="term-btn btn-maximize"></span>
+        </div>
+        <div class="terminal-title">root@elementista-core: ~</div>
+      </div>
+      
+      <!-- Conteúdo do Terminal -->
+      <div class="terminal-body">
+        
+        <div style="color: #ff9800; font-weight: bold; font-size: 16px; margin-bottom: 5px;">Elementista Browser "versão 3.11.5"</div>
+        <div style="color: #dfdbd2; font-size: 13px; margin-bottom: 20px;">[Minha Matrix. Meu Mundo. Minhas Regras. Seu espaço.]</div>
+        
+        <div class="log-alert">
+          <strong>⚠️ [SYSTEM WARNING] ATENÇÃO E DESTINAÇÃO:</strong>
+          <br>
+          Este navegador portátil foi desenvolvido exclusivamente para fins de preservação e execução otimizada de jogos clássicos que utilizam a tecnologia Flash Player. Não o utilize para navegação diária ou transações financeiras.
+        </div>
+        
+        <!-- Linha de Comando Interativa -->
+        <div style="margin-top: 30px; border-top: 1px dashed #ff9800; padding-top: 20px;">
+          <!-- Instruções acima da linha de comando -->
+          <p style="color: #dfdbd2; margin-top: 0; margin-bottom: 15px; font-size: 13px; line-height: 1.6; font-family: monospace;">
+            💾 Digite: <span style="color: #ff9800;">adicionar NomeDoJogo https://url.com</span> para salvar um link.<br>
+            ❌ Digite: <span style="color: #ff5f56;">remover NomeDoJogo</span> para deletar da lista.
+          </p>
+          
+          <!-- Linha de entrada do terminal explícita -->
+          <span class="prompt">root@matrix:</span><span class="prompt-path">~</span><span class="prompt">#</span>
+          <input type="text" id="terminal-input" placeholder="Aguardando comando..." style="background: transparent; border: none; color: #00ff66; font-family: monospace; font-size: 14px; width: 70%; outline: none;">
+        </div>
+        
+        <!-- Seção 04: Favoritos Core -->
+        <div style="margin-top: 30px;">
+          <span class="prompt">root@matrix:</span><span class="prompt-path">~/custom_saves/bookmarks</span><span class="prompt">#</span> ls -la
+          <p style="color: #dfdbd2; margin-top: 5px; font-size: 13px;">Jogos e servidores salvos na sua Matrix pessoal:</p>
+          
+          <div id="meus-favoritos"></div>
+        </div>
+
+
+
+        <!-- Seção 01: Servidores -->
+        <div>
+          <span class="prompt">root@matrix:</span><span class="prompt-path">~/legend_online/servers</span><span class="prompt">#</span> ./init_launcher.sh
+          <p style="color: #dfdbd2; margin-top: 5px; font-size: 13px;">Selecione uma rota de rede para inicializar o jogo com aceleração ativa:</p>
+          
+          <a href="https://lobr.creaction-network.com" class="link-interno">> [RUN] Legend Online "BRASIL" [://Server BR]</a>
+          <a href="https://lorpt.creaction-network.com" class="link-interno">> [RUN] Legend Online "Classic" [://Server Classic]</a>
+          <a href="https://loes.creaction-network.com" class="link-interno">> [RUN] Legend Online "Espanhol" [://Server Espanhol]</a>
+          <a href="https://lotr.creaction-network.com" class="link-interno">> [RUN] Legend Online "Turco" [://Server Turco]</a>
+          <a href="https://wartune.wan.com/" class="link-interno">> [RUN] Legend Online "WARTUNE" [://wan.com]</a>
+        <!-- <a href="https://ru.101xp.com/games/demon_slayer" class="link-interno">> [RUN] Legend Online "DEMON SLAYER" [://101xp.com]</a> -->
+          <a href="https://play.dragonfable.com/game/web.asp" class="link-interno">> [RUN] DragonFable [://dragonfable.com]</a>
+          <a href="https://www.transformice.com/transformice-swf.html" class="link-interno">> [RUN] Transformice [://transformice.com]</a>
+        </div>
+
+        <!-- Seção 02: Archive -->
+        <div style="margin-top: 30px;">
+          <span class="prompt">root@matrix:</span><span class="prompt-path">~/archive_acquisitions/swf</span><span class="prompt">#</span> wget --fetch-all
+          <p style="color: #dfdbd2; margin-top: 5px; font-size: 13px;">Carregar acervos de preservação digital armazenados no archive.org:</p>
+          
+          <a href="https://archive.org/download/banned-from-equestria-daily-1.5" class="link-interno">> [FETCH] banned-from-equestria-daily-1.5</a>
+          <a href="https://archive.org/download/assortedflashgames1" class="link-interno">> [FETCH] assortedflashgames1</a>
+          <a href="https://archive.org/download/swf-games/SWF%20GAMES/" class="link-interno">> [FETCH] Swf-Games Index</a>
+          <a href="https://archive.org/download/swf-archive" class="link-interno">> [FETCH] Coleção SWF Core</a>
+          <a href="https://archive.org/download/armorgames" class="link-interno">> [FETCH] Coleção Armorgames</a>
+          <a href="https://archive.org/download/flash-games_20211214" class="link-interno">> [FETCH] Flash Games 20211214 Batch</a>
+          <a href="https://archive.org/download/all_nitrome_games" class="link-interno">> [FETCH] All Nitrome Games Batch</a>
+        </div>
+
+
+        <!-- Seção 03: Redes de Cópia -->
+        <div class="redes-terminal-block">
+          <div style="color: #ff9800; font-size: 13px; font-weight: bold; margin-bottom: 15px; text-transform: uppercase;">// CHANNELS_LOG (Copie e cole no seu navegador do dia a dia):</div>
+
+          <label style="color: #4da6ff;"># discord_invite_link:</label>
+          <input type="text" class="campo-link" value="https://discord.com/invite/yN3GBf9d5V" readonly onclick="this.select();">
+          
+          <label style="color: #4da6ff;"># github_repository_path:</label>
+          <input type="text" class="input-terminal campo-link" value="https://github.com/elementista/elementista-browser" readonly onclick="this.select();">
+          
+          <label style="color: #4da6ff;"># blogger_station_url:</label>
+          <input type="text" class="input-terminal campo-link" value="https://elementista.blogspot.com/" readonly onclick="this.select();">
+          
+          <label style="color: #4da6ff;"># youtube_channel_source:</label>
+          <input type="text" class="input-terminal campo-link" value="https://www.youtube.com/@elementista" readonly onclick="this.select();">
+          
+          <label style="color: #4da6ff;"># kick_streaming_lobby:</label>
+          <input type="text" class="input-terminal campo-link" value="https://kick.com/elementista" readonly onclick="this.select();">
+        </div>
+       
+        <div style="text-align: right; margin-top: 25px; font-style: italic; color: #ff9800; font-size: 16px;">
+          "Respeitando sua opinião, mas defendendo a minha."
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <script>
+    const canvas = document.getElementById('matrix-bg');
+    const ctx = canvas.getContext('2d');
+
+    function ajustarCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    ajustarCanvas();
+    window.addEventListener('resize', ajustarCanvas);
+
+    const caracteres = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎMAミムメモYAユヨラリルレロワン".split("");
+    const tamanhoFonte = 14;
+    const colunas = canvas.width / tamanhoFonte;
+    const gotas = [];
+
+    for (let x = 0; x < colunas; x++) { gotas[x] = 1; }
+
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = "#00ff66";
+        ctx.font = tamanhoFonte + "px monospace";
+
+        for (let i = 0; i < gotas.length; i++) {
+            const char = caracteres[Math.floor(Math.random() * caracteres.length)];
+            ctx.fillText(char, i * tamanhoFonte, gotas[i] * tamanhoFonte);
+            if (gotas[i] * tamanhoFonte > canvas.height && Math.random() > 0.975) { gotas[i] = 0; }
+            gotas[i]++;
+        }
+    }
+    setInterval(draw, 33);     
+  </script>
+    <script src="inicio.js"></script>
+
+</body>
+</html>
+
